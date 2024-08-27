@@ -48,10 +48,13 @@ public class ArticleEntity {
     private String subtitle;
 
     @NonNull
+    @Column(length = 65535)
     private String body;
 
     private String createdAt;
 
+
+    @Column(length = 65535)
     private String imageLink;
 
     @ManyToOne

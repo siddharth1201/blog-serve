@@ -15,4 +15,6 @@ public class CreateArticleRequest {
     private String body;
     @Nullable
     private String subtitle;
+    @Nullable
+    private String imageLink;
 }

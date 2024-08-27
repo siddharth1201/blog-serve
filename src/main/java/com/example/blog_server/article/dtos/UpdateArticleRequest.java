@@ -15,4 +15,7 @@ public class UpdateArticleRequest {
     private String body;
     @Nullable
     private String subtitle;
+    @Nullable
+    private String imageLink;
+
 }

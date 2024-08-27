@@ -1,5 +1,7 @@
 package com.example.blog_server.article;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.blog_server.article.dtos.CreateArticleRequest;
@@ -24,7 +26,7 @@ public class ArticleService {
     public ArticleEntity getArticleBySlug(String slug){
         var article = articleRepository.findBySlug(slug);
         if(article==null){
-            // throw new ArticleNotFoundException(slug);
+             throw new ArticleNotFoundException(slug);
         }
         return article;
     }
@@ -36,15 +38,20 @@ public class ArticleService {
                                     .slug(a.getTitle().toLowerCase().replaceAll("\\s+", "-"))
                                     .body(a.getBody())
                                     .subtitle(a.getSubtitle())
+                                    .imageLink(a.getImageLink())
                                     .author(author)
                                     .build()
                                     );
     }
 
 
-    public ArticleEntity updateArticle(Long articleId, UpdateArticleRequest a){
+    public ArticleEntity updateArticle(Long articleId, UpdateArticleRequest a, Long userId){
         var article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId));
         
+        if (!article.getAuthor().getId().equals(userId)) {
+            throw new UnauthorizedException("You are not authorized to update this article");
+        }
+
         if(a.getTitle()!=null){
             article.setTitle(a.getTitle());
             article.setSlug(a.getTitle().toLowerCase().replaceAll("\\s+","-"));
@@ -61,10 +68,20 @@ public class ArticleService {
 
         }
 
+        if(a.getImageLink()!=null){
+            article.setImageLink(a.getImageLink());
+        }
+
         return articleRepository.save(article);
         
     }
 
+
+    static class UnauthorizedException extends RuntimeException {
+        public UnauthorizedException(String message) {
+            super(message);
+        }
+    }
 
     static class ArticleNotFoundException extends IllegalArgumentException {
         public ArticleNotFoundException(String slug) {
@@ -75,4 +92,25 @@ public class ArticleService {
             super("Article with id: " + id + " not found");
         }
     }
+
+
+    public Optional<ArticleEntity> getArticleById(Long id) {
+        // TODO Auto-generated method stub
+        var article = articleRepository.findById(id);
+        if(article==null){
+            throw new ArticleNotFoundException(id);
+        }
+        return article;
+    }
+
+    public void deleteArticle(Long id) {
+        if (articleRepository.existsById(id)) {
+            articleRepository.deleteById(id);
+        } else {
+            throw new ArticleNotFoundException(id); // Custom exception if article not found
+        }
+    }
+    
+
+    
 }

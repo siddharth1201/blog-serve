@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.blog_server.common.dtos.ErrorResponse;
+import com.example.blog_server.email.EmailDetails;
+import com.example.blog_server.email.EmailServiceImpl;
 import com.example.blog_server.security.JWTService;
 import com.example.blog_server.user.dtos.CreateUserRequest;
 import com.example.blog_server.user.dtos.LoginUserRequest;
@@ -26,12 +28,13 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final JWTService jwtService;
-    
+    private final EmailServiceImpl emailService;
 
-    public UserController(UserService userService, ModelMapper modelMapper, JWTService jwtService){
+    public UserController(UserService userService, ModelMapper modelMapper, JWTService jwtService,EmailServiceImpl emailService){
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.jwtService = jwtService;
+        this.emailService = emailService;
     }
 
     @PostMapping("")
@@ -40,6 +43,14 @@ public class UserController {
         URI savedUserUri = URI.create("/users/"+savedUser.getId());
         var userResponse = modelMapper.map(savedUser, UserResponse.class);
         userResponse.setToken(jwtService.createJwt(savedUser.getId()));
+        EmailDetails e = EmailDetails.builder()
+        .recipient(savedUser.getEmail())
+        .msgBody("You have Successfully registered in BlogZeee, \n\n\n\nhappy writing")
+        .subject("subss")
+        //.attachment(null)
+        .build();
+
+        emailService.sendSimpleEmail(e);
         return ResponseEntity.created(savedUserUri).body(userResponse);
     }   
 

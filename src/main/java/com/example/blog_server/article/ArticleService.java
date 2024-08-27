@@ -83,7 +83,7 @@ public class ArticleService {
         }
     }
 
-    static class ArticleNotFoundException extends IllegalArgumentException {
+    public static class ArticleNotFoundException extends IllegalArgumentException {
         public ArticleNotFoundException(String slug) {
             super("Article " + slug + " not found");
         }

@@ -54,6 +54,10 @@ public class CommentService {
 
         commentRepository.deleteById(commentId);
     }
+    
+    public void deleteAllByArticleId(Long articleId) {
+        commentRepository.deleteAllByArticleId(articleId);
+    }
 
     static class UnauthorizedException extends RuntimeException {
         public UnauthorizedException(String message) {

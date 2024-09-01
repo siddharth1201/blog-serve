@@ -51,7 +51,7 @@ public class AppSecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173") // Adjust this to your frontend URL
+                        .allowedOrigins("https://blog-client-eight-mauve.vercel.app/") // Adjust this to your frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

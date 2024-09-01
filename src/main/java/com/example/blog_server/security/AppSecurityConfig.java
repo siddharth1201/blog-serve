@@ -54,7 +54,7 @@ public class AppSecurityConfig {
                         .allowedOrigins("*") // Adjust this to your frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(false);
+                        ;
             }
         };
     }

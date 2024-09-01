@@ -1,6 +1,7 @@
 package com.example.blog_server.article.dtos;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.lang.Nullable;
 
 @Data
 @Setter(AccessLevel.NONE)
+@Builder
 public class CreateArticleRequest {
     @NonNull
     private String title;

@@ -42,6 +42,7 @@ public class CommentEntity {
     @Nullable
     private String title;
 
+    @Column(length = 65535)
     @NonNull
     private String body;
 

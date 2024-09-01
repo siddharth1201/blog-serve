@@ -375,3 +375,12 @@ insert into articles (author_id,body,created_at,image_link,slug,subtitle,title,i
 2024-08-27 10:03:58.023653+05:30 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Value too long for column "BODY CHARACTER VARYING(255)": "U&'The dog (Canis familiaris or Canis lupus familiaris) is a domesticated descen... (1145)"; SQL statement:
 insert into articles (author_id,body,created_at,image_link,slug,subtitle,title,id) values (?,?,?,?,?,?,?,?) [22001-224]
+2024-09-01 00:46:21.731611+05:30 jdbc[73]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "BODY CHARACTER VARYING(255)": "U&'this is a good post\\000athis is a good postthis is a good postthis is a good ... (362)"; SQL statement:
+insert into comments (article_id,author_id,body,created_at,title,id) values (?,?,?,?,?,?) [22001-224]
+2024-09-01 00:46:32.920621+05:30 jdbc[73]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "BODY CHARACTER VARYING(255)": "'this is a good postthis is a good postthis is a good postthis is a good postthi... (266)"; SQL statement:
+insert into comments (article_id,author_id,body,created_at,title,id) values (?,?,?,?,?,?) [22001-224]
+2024-09-01 00:49:23.454981+05:30 jdbc[73]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "BODY CHARACTER VARYING(255)": "U&'a long comment\\000aa long commenta long commenta long commenta long commenta ... (379)"; SQL statement:
+insert into comments (article_id,author_id,body,created_at,title,id) values (?,?,?,?,?,?) [22001-224]
